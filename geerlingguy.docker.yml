@@ -1,0 +1,9 @@
+---
+- name: Install docker on the nodes by geerlingguy.docker
+  hosts: all
+  become: yes
+  become_user: root
+
+  roles:
+    - role: geerlingguy.docker
+

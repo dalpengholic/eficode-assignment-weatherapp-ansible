@@ -1,0 +1,15 @@
+---
+- name: Prepare webserver
+  hosts: all
+  
+  tasks:
+  - name: Creates directory for git clone  
+    ansible.builtin.file:
+      path: /home/ubuntu
+      state: directory
+  - name: Git clone from master branch
+    ansible.builtin.git:
+      repo: https://github.com/dalpengholic/eficode-assignment-weatherapp.git
+      dest: /home/ubuntu/webserver
+      single_branch: yes
+      version: master  
