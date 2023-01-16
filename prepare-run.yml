@@ -3,6 +3,10 @@
   hosts: webserver
   
   tasks:
+  - name: Down docker-compose.prod.yml
+    ansible.builtin.command:
+      cmd: /usr/local/bin/docker-compose -f /home/ubuntu/webserver/docker-compose.prod.yml down 
+
   - name: Docker system prune for cleaning
     ansible.builtin.command:
       cmd:  /usr/bin/docker system prune -f
@@ -29,6 +33,12 @@
       src: ./.prod.env
       dest: /home/ubuntu/webserver
 
-  - name: Run docker-compose.prod.yml
-    ansible.builtin.command:
-      cmd: /usr/local/bin/docker-compose -f /home/ubuntu/webserver/docker-compose.prod.yml up -d
+  - name: Pull and run docker-compose.prod.yml
+    ansible.builtin.command: "{{ item }}"
+    with_items:
+      - /usr/local/bin/docker-compose -f /home/ubuntu/webserver/docker-compose.prod.yml pull
+      - /usr/local/bin/docker-compose -f /home/ubuntu/webserver/docker-compose.prod.yml up -d
+
+   # name: Run docker-compose.prod.yml
+    #ansible.builtin.command:
+      # cmd: /usr/local/bin/docker-compose -f /home/ubuntu/webserver/docker-compose.prod.yml up -d
