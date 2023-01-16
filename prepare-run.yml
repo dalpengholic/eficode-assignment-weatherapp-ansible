@@ -1,6 +1,6 @@
 ---
 - name: Prepare webserver
-  hosts: all
+  hosts: webserver
   
   tasks:
   - name: Creates directory for git clone  

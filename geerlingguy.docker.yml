@@ -1,6 +1,6 @@
 ---
 - name: Install docker on the nodes by geerlingguy.docker
-  hosts: all
+  hosts: webwerver
   become: yes
   become_user: root
 
