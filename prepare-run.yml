@@ -3,6 +3,15 @@
   hosts: webserver
   
   tasks:
+  - name: Docker system prune for cleaning
+    ansible.builtin.command:
+      cmd:  /usr/bin/docker system prune -f
+
+  - name: Delete directory for cleaning
+    ansible.builtin.file:
+      path: /home/ubuntu/webserver
+      state: absent  
+        
   - name: Creates directory for git clone  
     ansible.builtin.file:
       path: /home/ubuntu/webserver
@@ -20,8 +29,6 @@
       src: ./.prod.env
       dest: /home/ubuntu/webserver
 
-  - name: Add user to docker group
-    ansible.builtin.user:
-      name: ubuntu
-      groups: docker
-      append: yes 
+  - name: Run docker-compose.prod.yml
+    ansible.builtin.command:
+      cmd: /usr/local/bin/docker-compose -f /home/ubuntu/webserver/docker-compose.prod.yml up -d
