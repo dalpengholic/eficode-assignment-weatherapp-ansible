@@ -4,6 +4,11 @@
   become: yes
   become_user: root
 
+  vars:
+    pip_install_packages:
+      - name: docker
+
   roles:
-    - role: geerlingguy.docker
+    - geerlingguy.docker
+    - geerlingguy.pip
 
