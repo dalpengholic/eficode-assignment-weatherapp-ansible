@@ -1,7 +1,62 @@
 # eficode-assignment-weatherapp-ansible
-This repo handles an Ansible part for the assingment
+This repo handles an Ansible part for the assingment.
 
 ## How to use this repository for deployment
+This repository is for a control node to deploy production docker images to production servers.
+I will assume the current conditon below.
+- The control node is outside of AWS infrastructure.
+- The target node is already provisied by AWS CloudFormation.
+- The automatic deployment will be executed by Ansible tool.
+
+### Prerequisite
+1. Ansible should be installed on the control node.
+2. Target nodes should be opened for SSH access.
+3. Python should be installed on the target nodes.
+4. `.prod.env` file should be created the root of working directory on target node
+
+```Shell
+$ cat .prod.env
+# API key to access openweathermap for production weatherapp
+APPID=<your api key>
+# EXAMPLE
+# APPID=12345678910
+# You need to provide .prod.env at workdir for production server
+ENDPOINT=http://0.0.0.0:9000/api
+```
+ 
+### How to use
+1. Create working directory and git clone in the directory
+```Shell
+$ mkdir wk_ansible and cd wk_ansible
+# Using one of commands depending on your condition
+$ git clone https://github.com/dalpengholic/eficode-assignment-weatherapp-ansible.git
+$ git clone git@github.com:dalpengholic/eficode-assignment-weatherapp-ansible.git
+
+```
+2. Create inventory file at the root of the cloned directory to Make connection from a control node to a target node
+```Shell
+$ cd eficode-assignment-weatherapp-ansible
+$ pwd
+wk_ansible/eficode-assignment-weatherapp-ansible
+# Giving a dns or ip address of target node. After making inventory file
+$ can inventory
+[webserver]
+ec2-<your target ip>.compute-1.amazonaws.com
+```
+
+3. Test connection first by using Ansible ping module
+```Shell
+$ ansible all -m ping -u ubuntu --private-key /home/youruser/Downloads/yourkey.pem
+ec2-.compute-1.amazonaws.com | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+
 
 ## How I understand this assignment
 - General purpose
@@ -39,3 +94,4 @@ I have followed the virtual 1 week sprint below.
 - Ansible playbooks shoule be handle not only Ubuntu or Debian, but also different type of OS in general for reusability
 - There could be better way to handle APIKEY in secured manner such as using Ansible Vault to encrypt API key or Hashicorp Vault using dedicated service to handle sensitive data
 - It would be better to organize the current Ansible directory structure such as using host_vars and roles/tasks folders for reusability and getting better maintainability 
+- It would be better to have a bation host in AWS as a control node. 
