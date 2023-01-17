@@ -56,7 +56,25 @@ ec2-.compute-1.amazonaws.com | SUCCESS => {
 }
 ```
 
+4. Create `.prod.env` file at at the root of the cloned directory
+```Shell
+$ cat .prod.env
+# API key to access openweathermap for production weatherapp
+APPID=
+# EXAMPLE
+# APPID=12345678910
+# You need to provide .prod.env at workdir for production server
+ENDPOINT=http://0.0.0.0:9000/api
+```
+5. Run `geerlingguy.docker.yml` playbook to install docker and docker-compose
+```Shell
+$ ansible-playbook geerlingguy.docker.yml  -u ubuntu --private-key /home/youruser/Downloads/yourkey.pem
+```
 
+6. Run `prepare-run.yml` playbook to run production images by docker-compose
+```Shell
+$ ansible-playbook prepare-run.yml -u ubuntu --private-key /home/youruser/Downloads/yourkey.pem
+```
 
 ## How I understand this assignment
 - General purpose
