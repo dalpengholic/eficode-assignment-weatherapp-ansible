@@ -76,6 +76,9 @@ $ ansible-playbook geerlingguy.docker.yml  -u ubuntu --private-key /home/youruse
 $ ansible-playbook prepare-run.yml -u ubuntu --private-key /home/youruser/Downloads/yourkey.pem
 ```
 
+7. Open your browser and type the instance's dns or ip address to see the result 
+
+
 ## How I understand this assignment
 - General purpose
 This assignment is designed to measure candidates' knowledge and implementation skillsregarding the general Continuos Integration and Continuous Deployment(CI/CD) as well as Infrastructure as Code(IaC). 
