@@ -6,7 +6,7 @@
   - name: Down docker-compose.prod.yml
     ansible.builtin.command:
       cmd: /usr/local/bin/docker-compose -f /home/ubuntu/webserver/docker-compose.prod.yml down 
-      ignore_errors: true
+    ignore_errors: true
 
   - name: Docker system prune for cleaning
     ansible.builtin.command:
